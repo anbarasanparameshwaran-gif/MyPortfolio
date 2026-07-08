@@ -10,8 +10,7 @@ function ResumePage() {
     const isInView = useInView(ref, { once: true, margin: '-100px' })
 
     return (
-        <div
-            className="min-vh-100"
+        <div className="min-vh-100"
             style={{
                 background: theme === 'dark'
                     ? 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)'

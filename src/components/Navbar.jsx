@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaSun, FaMoon, FaBars, FaTimes, FaDownload } from 'react-icons/fa'
 import { useTheme } from '../context/ThemeContext.jsx'
 
 const navLinks = [
-    { to: '/#home', label: 'Home', scrollTo: 'home' },
-    { to: '/#about', label: 'About Me', scrollTo: 'about' },
-    { to: '/#experience', label: 'Experience', scrollTo: 'experience' },
-    { to: '/#skills', label: 'Skills', scrollTo: 'skills' },
-    //   { to: '/#projects', label: 'Projects', scrollTo: 'projects' },
+    { to: '/', label: 'Home', section: 'home' },
+    { to: '/about', label: 'About Me', section: 'about' },
+    { to: '/experience', label: 'Experience', section: 'experience' },
+    { to: '/skills', label: 'Skills', section: 'skills' },
+    { to: '/contact', label: 'Contact', section: 'contact' },
     { to: '/resume', label: 'Resume', isPage: true },
-    { to: '/#contact', label: 'Contact', scrollTo: 'contact' },
 ]
 
 function Navbar() {
@@ -19,6 +18,7 @@ function Navbar() {
     const [scrolled, setScrolled] = useState(false)
     const [mobileOpen, setMobileOpen] = useState(false)
     const location = useLocation()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -32,17 +32,36 @@ function Navbar() {
         setMobileOpen(false)
     }, [location])
 
-    const handleNavClick = (e, link) => {
-        if (link.scrollTo) {
-            e.preventDefault()
-            const el = document.getElementById(link.scrollTo)
-            if (el) {
-                el.scrollIntoView({ behavior: 'smooth' })
-            } else if (location.pathname !== '/') {
-                window.location.href = '/' + link.to
-            }
+    useEffect(() => {
+        const hash = window.location.hash.replace('#', '')
+        if (!hash) return
+
+        const target = document.getElementById(hash)
+        if (target) {
+            setTimeout(() => {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }, 100)
         }
+    }, [location])
+
+    const handleNavClick = (e, link) => {
+        if (link.isPage) {
+            setMobileOpen(false)
+            return
+        }
+
+        e.preventDefault()
         setMobileOpen(false)
+
+        if (location.pathname === '/') {
+            const target = document.getElementById(link.section)
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }
+            return
+        }
+
+        navigate(`/${link.section ? `#${link.section}` : ''}`)
     }
 
     return (

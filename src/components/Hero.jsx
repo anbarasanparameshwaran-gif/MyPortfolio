@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FaGithub, FaLinkedin, FaEnvelope, FaInstagram, FaDownload, FaEye, FaPaperPlane } from 'react-icons/fa'
 import { useTheme } from '../context/ThemeContext.jsx'
@@ -113,11 +114,6 @@ function Hero() {
         return () => clearTimeout(timer)
     }, [])
 
-    const scrollToSection = (id) => {
-        const el = document.getElementById(id)
-        if (el) el.scrollIntoView({ behavior: 'smooth' })
-    }
-
     return (
         <section
             id="home"
@@ -192,20 +188,20 @@ function Hero() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.8 }}
                         >
-                            <motion.button
-                                onClick={() => scrollToSection('contact')}
-                                className="btn d-flex align-items-center gap-2 px-4 py-3 rounded-pill"
-                                whileHover={{ scale: 1.05, y: -2 }}
-                                whileTap={{ scale: 0.95 }}
-                                style={{
-                                    background: theme === 'dark' ? '#0ea5e9' : '#1e3a5f',
-                                    color: '#ffffff',
-                                    border: 'none',
-                                }}
-                            >
-                                <FaPaperPlane size={16} />
-                                Contact Me
-                            </motion.button>
+                            <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
+                                <Link
+                                    to="/contact"
+                                    className="btn d-flex align-items-center gap-2 px-4 py-3 rounded-pill text-decoration-none"
+                                    style={{
+                                        background: theme === 'dark' ? '#0ea5e9' : '#1e3a5f',
+                                        color: '#ffffff',
+                                        border: 'none',
+                                    }}
+                                >
+                                    <FaPaperPlane size={16} />
+                                    Contact Me
+                                </Link>
+                            </motion.div>
                             <motion.a
                                 href="/resume"
                                 className="btn d-flex align-items-center gap-2 px-4 py-3 rounded-pill text-decoration-none"
