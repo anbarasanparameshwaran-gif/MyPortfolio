@@ -84,7 +84,7 @@ function About() {
                                         background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
                                     }}
                                 >
-                                    <p className="text-white fw-bold mb-0 fs-5">John Developer</p>
+                                    <p className="text-white fw-bold mb-0 fs-5">Anbarasan Parameshwaran</p>
                                     <p className="text-white-50 mb-0">MERN Stack Developer</p>
                                 </div>
                             </div>

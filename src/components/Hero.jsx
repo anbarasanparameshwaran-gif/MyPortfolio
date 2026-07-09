@@ -159,7 +159,7 @@ function Hero() {
                             <span style={{ color: theme === 'dark' ? '#0ea5e9' : '#1e3a5f' }}>
                                 Anbarasan
                             </span>{' '}
-                            Developer
+                            Parameshwaran
                         </motion.h1>
 
                         <motion.div
