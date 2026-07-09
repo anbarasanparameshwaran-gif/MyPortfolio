@@ -2,12 +2,13 @@ import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { FaMapMarkerAlt, FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaPaperPlane, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa'
-import { supabase } from '../lib/supabase.js'
 import { useTheme } from '../context/ThemeContext.jsx'
+
+const recipientEmail = 'anbarasanparameshwaran@gmail.com'
 
 const contactCards = [
     { icon: <FaMapMarkerAlt size={24} />, label: 'Location', value: 'Erode, Tamil Nadu, India', href: '#' },
-    { icon: <FaEnvelope size={24} />, label: 'Email', value: 'anbarasanparameshwaran@gmail.com', href: 'mailto:anbarasanparameshwaran@email.com' },
+    { icon: <FaEnvelope size={24} />, label: 'Email', value: recipientEmail, href: `mailto:${recipientEmail}` },
     { icon: <FaPhone size={24} />, label: 'Phone', value: '+91 63690 27421', href: 'tel:+916369027421' },
     { icon: <FaLinkedin size={24} />, label: 'LinkedIn', value: 'LinkedIn Profile', href: 'https://www.linkedin.com/in/anbarasan-parameshwaran-5b407a219/' },
     { icon: <FaGithub size={24} />, label: 'GitHub', value: 'GitHub Profile', href: 'https://github.com/anbarasanparameshwaran-gif' },
@@ -100,11 +101,28 @@ function Contact() {
         setStatus({ type: '', message: '' })
 
         try {
-            const { error } = await supabase
-                .from('contact_messages')
-                .insert([formData])
+            const formPayload = new URLSearchParams()
+            formPayload.append('name', formData.name)
+            formPayload.append('email', formData.email)
+            formPayload.append('subject', formData.subject)
+            formPayload.append('message', formData.message)
+            formPayload.append('_subject', `New Portfolio Contact: ${formData.subject}`)
+            formPayload.append('_captcha', 'false')
+            formPayload.append('_replyto', formData.email)
+            formPayload.append('_template', 'table')
 
-            if (error) throw error
+            const response = await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': 'application/json',
+                },
+                body: formPayload.toString(),
+            })
+
+            if (!response.ok) {
+                throw new Error('Failed to send message')
+            }
 
             setStatus({ type: 'success', message: 'Message sent successfully! I will get back to you soon.' })
             setFormData({ name: '', email: '', subject: '', message: '' })
