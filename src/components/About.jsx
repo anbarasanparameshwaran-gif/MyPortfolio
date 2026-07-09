@@ -161,23 +161,14 @@ function About() {
                                 <p className="small fw-medium mb-1" style={{ color: theme === 'dark' ? '#94a3b8' : '#64748b' }}>
                                     {card.label}
                                 </p>
-                                <p
-                                    className="fw-bold mb-0" 
-                                    style={{
-                                        color: theme === 'dark' ? '#f8fafc' : '#1e293b',
-                                        fontSize: '0.95rem',
-                                        overflowWrap: 'anywhere',
-                                        wordBreak: 'break-word',
-                                        lineHeight: 1.4,
-                                    }}
-                                >
+                                <p className="fw-bold mb-0" style={{ color: theme === 'dark' ? '#f8fafc' : '#1e293b', fontSize: '0.95rem' }}>
                                     {card.value}
                                 </p>
                             </>
                         )
 
                         return (
-                            <div className="col-12 col-sm-6 col-md-3" key={card.label}>
+                            <div className="col-6 col-md-3" key={card.label}>
                                 <AnimatedCard delay={index * 0.1}>
                                     {card.href ? (
                                         <motion.a
