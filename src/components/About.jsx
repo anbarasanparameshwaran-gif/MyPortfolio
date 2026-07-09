@@ -6,10 +6,10 @@ import { useTheme } from '../context/ThemeContext.jsx';
 import my_pic from '../assets/my_pic.jpeg'
 
 const infoCards = [
-    { icon: <FaMapMarkerAlt />, label: 'Location', value: 'Erode, Tamil Nadu, India' },
+    { icon: <FaMapMarkerAlt />, label: 'Location', value: 'Erode, Tamil Nadu, India', href: 'https://www.google.com/maps/search/?api=1&query=Erode+Tamil+Nadu+India' },
     { icon: <FaBriefcase />, label: 'Experience', value: '1+ Years' },
-    { icon: <FaEnvelope />, label: 'Email', value: 'anbarasanparameshwaran.com' },
-    { icon: <FaPhone />, label: 'Phone', value: '+91 63690 27421' },
+    { icon: <FaEnvelope />, label: 'Email', value: 'anbarasanparameshwaran@gmail.com', href: 'mailto:anbarasanparameshwaran@gmail.com' },
+    { icon: <FaPhone />, label: 'Phone', value: '+91 63690 27421', href: 'tel:+916369027421' },
 ]
 
 const education = [
@@ -144,47 +144,73 @@ function About() {
                 </div>
 
                 <div className="row g-4">
-                    {infoCards.map((card, index) => (
-                        <div className="col-6 col-md-3" key={card.label}>
-                            <AnimatedCard delay={index * 0.1}>
-                                <motion.div
-                                    className="text-center p-4 rounded-4 h-100"
+                    {infoCards.map((card, index) => {
+                        const cardContent = (
+                            <>
+                                <div
+                                    className="d-flex align-items-center justify-content-center rounded-circle mx-auto mb-3"
                                     style={{
-                                        background: theme === 'dark'
-                                            ? 'rgba(255, 255, 255, 0.05)'
-                                            : 'rgba(255, 255, 255, 0.7)',
-                                        backdropFilter: 'blur(10px)',
-                                        border: `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)'}`,
+                                        width: '50px',
+                                        height: '50px',
+                                        background: theme === 'dark' ? 'rgba(14, 165, 233, 0.2)' : 'rgba(30, 58, 95, 0.1)',
+                                        color: theme === 'dark' ? '#0ea5e9' : '#1e3a5f',
                                     }}
-                                    whileHover={{
-                                        scale: 1.05,
-                                        boxShadow: theme === 'dark'
-                                            ? '0 10px 30px rgba(14, 165, 233, 0.2)'
-                                            : '0 10px 30px rgba(30, 58, 95, 0.15)',
-                                    }}
-                                    transition={{ type: 'spring', stiffness: 300 }}
                                 >
-                                    <div
-                                        className="d-flex align-items-center justify-content-center rounded-circle mx-auto mb-3"
-                                        style={{
-                                            width: '50px',
-                                            height: '50px',
-                                            background: theme === 'dark' ? 'rgba(14, 165, 233, 0.2)' : 'rgba(30, 58, 95, 0.1)',
-                                            color: theme === 'dark' ? '#0ea5e9' : '#1e3a5f',
-                                        }}
-                                    >
-                                        {card.icon}
-                                    </div>
-                                    <p className="small fw-medium mb-1" style={{ color: theme === 'dark' ? '#94a3b8' : '#64748b' }}>
-                                        {card.label}
-                                    </p>
-                                    <p className="fw-bold mb-0" style={{ color: theme === 'dark' ? '#f8fafc' : '#1e293b', fontSize: '0.95rem' }}>
-                                        {card.value}
-                                    </p>
-                                </motion.div>
-                            </AnimatedCard>
-                        </div>
-                    ))}
+                                    {card.icon}
+                                </div>
+                                <p className="small fw-medium mb-1" style={{ color: theme === 'dark' ? '#94a3b8' : '#64748b' }}>
+                                    {card.label}
+                                </p>
+                                <p className="fw-bold mb-0" style={{ color: theme === 'dark' ? '#f8fafc' : '#1e293b', fontSize: '0.95rem' }}>
+                                    {card.value}
+                                </p>
+                            </>
+                        )
+
+                        return (
+                            <div className="col-6 col-md-3" key={card.label}>
+                                <AnimatedCard delay={index * 0.1}>
+                                    {card.href ? (
+                                        <motion.a
+                                            href={card.href}
+                                            target={card.href.startsWith('http') ? '_blank' : undefined}
+                                            rel={card.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                            className="text-decoration-none d-block text-center p-4 rounded-4 h-100"
+                                            style={{
+                                                background: theme === 'dark'
+                                                    ? 'rgba(255, 255, 255, 0.05)'
+                                                    : 'rgba(255, 255, 255, 0.7)',
+                                                backdropFilter: 'blur(10px)',
+                                                border: `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)'}`,
+                                            }}
+                                            whileHover={{
+                                                scale: 1.05,
+                                                boxShadow: theme === 'dark'
+                                                    ? '0 10px 30px rgba(14, 165, 233, 0.2)'
+                                                    : '0 10px 30px rgba(30, 58, 95, 0.15)',
+                                            }}
+                                            transition={{ type: 'spring', stiffness: 300 }}
+                                        >
+                                            {cardContent}
+                                        </motion.a>
+                                    ) : (
+                                        <div
+                                            className="text-center p-4 rounded-4 h-100"
+                                            style={{
+                                                background: theme === 'dark'
+                                                    ? 'rgba(255, 255, 255, 0.05)'
+                                                    : 'rgba(255, 255, 255, 0.7)',
+                                                backdropFilter: 'blur(10px)',
+                                                border: `1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)'}`,
+                                            }}
+                                        >
+                                            {cardContent}
+                                        </div>
+                                    )}
+                                </AnimatedCard>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </section>
